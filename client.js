@@ -3,6 +3,8 @@
 const socket = io();
 const form = document.getElementById('form');
 const mI = document.getElementById('messageInput');
+const iI = document.getElementById('idInput');
+const nI = document.getElementById('nickInput');
 const mList = document.getElementById('messageList');
 
 
@@ -10,19 +12,37 @@ form.onsubmit = function(event) {
 
     event.preventDefault();
 
-    socket.emit('chat message', mI.value);
+    message = {
+      text: mI.value,
+      student_id: iI.value,
+      nick: nI.value,
+    }
+
+    socket.emit('chat message', message);
 
     mI.value = '';
     return false;
 }
 
-socket.on('chat message', function(msg) {
-    let m = document.createTextNode(msg);
-    let l = document.createElement('li');
+socket.on('chat message', function(message) {
+    let li = document.createElement('li');
+        let span = document.createElement('p');
+        let nick = document.createTextNode(message.nick + ":   ");
+        let p = document.createElement('p');
+        let text = document.createTextNode(message.text);
 
-    l.appendChild(m);
 
-    mList.appendChild(l);
+        span.appendChild(nick);
+        span.setAttribute('class', 'nick');
+
+        p.appendChild(text);
+        p.setAttribute('class', 'text');
+
+        li.appendChild(span);
+        li.appendChild(p);
+        li.setAttribute('class', 'message is-success');
+
+        document.getElementById('messageList').appendChild(li);
 });
 
 function getMessages() {
@@ -53,6 +73,10 @@ function showMessages(messages) {
         li.appendChild(span);
         li.appendChild(p);
         li.setAttribute('class', 'message');
+
+        if (messages[i].id == '15041') {
+          li.setAttribute('class', 'message is-success');
+        }
 
         document.getElementById('messageList').appendChild(li);
     }

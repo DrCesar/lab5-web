@@ -24,3 +24,6 @@
     float: right;
 }
 
+.is-success {
+  background-color: hsl(141, 71%, 48%) !important;
+}

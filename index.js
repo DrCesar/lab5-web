@@ -2,10 +2,13 @@
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 
 app.use(require('express').static(__dirname));
-
+app.use(bodyParser.json());
+app.use(cors())
 app.get('/', function (req, res) {
     res.sendFile(__dirname + "/index.html");
 });

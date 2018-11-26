@@ -74,7 +74,7 @@ function showMessages(messages) {
         li.appendChild(p);
         li.setAttribute('class', 'message');
 
-        if (messages[i].id == '15041') {
+        if (messages[i].student_id == '15041') {
           li.setAttribute('class', 'message is-success');
         }
 
